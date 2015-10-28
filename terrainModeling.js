@@ -3,17 +3,29 @@ function terrainFromIteration(n, minX,maxX,minY,maxY, vertexArray, faceArray,nor
 {
     var deltaX=(maxX-minX)/n;
     var deltaY=(maxY-minY)/n;
-    for(var i=0;i<=n;i++)
+    for(var i=0;i<=n;i++) {
        for(var j=0;j<=n;j++)
        {
            vertexArray.push(minX+deltaX*j);
            vertexArray.push(minY+deltaY*i);
-           vertexArray.push(0);
+           vertexArray.push(Math.random(1));
            
-           normalArray.push(0);
+           normalArray.push(0);	
            normalArray.push(0);
            normalArray.push(1);
        }
+    }
+    var zArray = new Array();
+    
+    for(var l = 2; l<vertexArray.length; l+=3){
+    	zArray.push(vertexArray[l]);
+    }
+
+    diamondSquare(zArray, 0, 0, n, n, n);
+
+    for(var i = 2; i<vertexArray.length; i+=3){
+    	vertexArray[i] = zArray[i/3];	
+    }
 
     var numT=0;
     for(var i=0;i<n;i++)
@@ -31,6 +43,22 @@ function terrainFromIteration(n, minX,maxX,minY,maxY, vertexArray, faceArray,nor
        }
     return numT;
 }
+
+function diamondSquare(inputArray, minX, minY, maxX, maxY, n)
+{
+	var mid = (minX + maxX)/2 + n*(minY+maxY)/2 
+	if (mid < 20) {
+	inputArray[mid] = (inputArray[minX+n*minY] + inputArray[minX+n*maxY] + inputArray[n*minY+maxX] + inputArray[maxX + n*maxY])/4 + Math.random();
+	diamondSquare(inputArray, minX, minY, mid, mid, n);
+	diamondSquare(inputArray, mid, mid, maxX, maxY, n);
+	diamondSquare(inputArray, minX, mid, mid, maxY, n);
+	diamondSquare(inputArray, mid, minY, maxX, mid, n);
+	}
+}
+
+
+
+
 //-------------------------------------------------------------------------
 function generateLinesFromIndexedTriangles(faceArray,lineArray)
 {
