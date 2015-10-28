@@ -47,7 +47,7 @@ function terrainFromIteration(n, minX,maxX,minY,maxY, vertexArray, faceArray,nor
 function diamondSquare(inputArray, minX, minY, maxX, maxY, n)
 {
 	var mid = (minX + maxX)/2 + n*(minY+maxY)/2 
-	if (mid < 20) {
+	if (mid != minX+n*minX) {
 	inputArray[mid] = (inputArray[minX+n*minY] + inputArray[minX+n*maxY] + inputArray[n*minY+maxX] + inputArray[maxX + n*maxY])/4 + Math.random();
 	diamondSquare(inputArray, minX, minY, mid, mid, n);
 	diamondSquare(inputArray, mid, mid, maxX, maxY, n);
