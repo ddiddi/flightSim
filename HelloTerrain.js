@@ -187,11 +187,10 @@ function loadShaderFromDOM(id) {
   var shaderScript = document.getElementById(id);
   
   // If we don't find an element with the specified id
-  // we do an early exit 
+  // we do an early exit w
   if (!shaderScript) {
-    return null;
+  	return null; 
   }
-  
   // Loop through the children for the found DOM element and
   // build up the shader source code as a string
   var shaderSource = "";

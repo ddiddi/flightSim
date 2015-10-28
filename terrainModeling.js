@@ -8,7 +8,7 @@ function terrainFromIteration(n, minX,maxX,minY,maxY, vertexArray, faceArray,nor
        {
            vertexArray.push(minX+deltaX*j);
            vertexArray.push(minY+deltaY*i);
-           vertexArray.push(Math.random(1));
+           vertexArray.push(0);
            
            normalArray.push(0);	
            normalArray.push(0);
@@ -24,7 +24,7 @@ function terrainFromIteration(n, minX,maxX,minY,maxY, vertexArray, faceArray,nor
     diamondSquare(zArray, 0, 0, n, n, n);
 
     for(var i = 2; i<vertexArray.length; i+=3){
-    	vertexArray[i] = zArray[i/3];	
+    	vertexArray[i] = zArray[(i-2)/3];	
     }
 
     var numT=0;
@@ -46,13 +46,20 @@ function terrainFromIteration(n, minX,maxX,minY,maxY, vertexArray, faceArray,nor
 
 function diamondSquare(inputArray, minX, minY, maxX, maxY, n)
 {
-	var mid = (minX + maxX)/2 + n*(minY+maxY)/2 
-	if (mid != minX+n*minX) {
-	inputArray[mid] = (inputArray[minX+n*minY] + inputArray[minX+n*maxY] + inputArray[n*minY+maxX] + inputArray[maxX + n*maxY])/4 + Math.random();
-	diamondSquare(inputArray, minX, minY, mid, mid, n);
-	diamondSquare(inputArray, mid, mid, maxX, maxY, n);
-	diamondSquare(inputArray, minX, mid, mid, maxY, n);
-	diamondSquare(inputArray, mid, minY, maxX, mid, n);
+	var midX = Math.floor((minX + maxX)/2);
+	var midY = Math.floor((minY + maxY)/2);	 
+	var mid = midX + n*midY;
+	if (minX < maxX - 1 && minY < maxY - 1) {
+		inputArray[mid] = (inputArray[minX+n*minY] + inputArray[minX+n*maxY] + inputArray[n*minY+maxX] + inputArray[maxX + n*maxY])/4 + 0.2*Math.random();
+		inputArray[midX + n*minY] = inputArray[mid];
+		inputArray[minX + n*midY] = inputArray[mid];
+		inputArray[maxX + n*midY] = inputArray[mid];
+		inputArray[midX + n*maxY] = inputArray[mid];
+
+		diamondSquare(inputArray, minX, minY, midX, midY, n);
+		diamondSquare(inputArray, midX, midY, maxX, maxY, n);
+		diamondSquare(inputArray, minX, midY, midX, maxY, n);
+		diamondSquare(inputArray, midX, minY, maxX, midY, n);
 	}
 }
 
