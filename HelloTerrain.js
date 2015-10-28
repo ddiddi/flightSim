@@ -20,6 +20,10 @@ var tIndexEdgeBuffer;
 var eyePt = vec3.fromValues(0.0,0.0,0.0);
 var viewDir = vec3.fromValues(0.0,0.0,-1.0);
 var up = vec3.fromValues(0.0,1.0,0.0);
+
+var baseDir = vec3.fromValues(0.0,0.0,-1.0);
+var baseUp = vec3.fromValues(0.0,1.0,0.0);
+
 var viewPt = vec3.fromValues(0.0,0.0,0.0);
 
 // Create the normal
@@ -32,6 +36,38 @@ var mvMatrix = mat4.create();
 var pMatrix = mat4.create();
 
 var mvMatrixStack = [];
+
+var globe = quat.create();
+
+
+function rollerLR(degree) {
+	var temp = quat.create();
+	temp = quat.setAxisAngle(temp, viewDir, degToRad(degree));
+	quat.normalize(temp, temp);
+	quat.multiply(globe, globe, temp);
+	quat.normalize(globe,globe);
+}
+
+
+function turn(degree) {
+	var temp = quat.create();
+	temp = quat.setAxisAngle(temp, up, degToRad(degree));
+	quat.normalize(temp, temp);
+	quat.multiply(globe, globe, temp);
+	quat.normalize(globe,globe);
+}
+
+
+function rollerUD(degree) {
+	var temp = quat.create();
+	var temp2 = vec3.create();
+	vec3.cross(temp2, viewDir, up);
+	temp = quat.setAxisAngle(temp, temp2, degToRad(degree));
+	quat.normalize(temp, temp);
+	quat.multiply(globe, globe, temp);
+	quat.normalize(globe,globe);
+
+}
 
 
 //-------------------------------------------------------------------------
@@ -276,6 +312,9 @@ function draw() {
     // We'll use perspective 
     mat4.perspective(pMatrix,degToRad(45), gl.viewportWidth / gl.viewportHeight, 0.1, 200.0);
 
+    vec3.transformQuat(viewDir, baseDir, globe);
+    vec3.transformQuat(up, baseUp, globe);
+
     // We want to look down -z, so create a lookat point in that direction    
     vec3.add(viewPt, eyePt, viewDir);
     // Then generate the lookat matrix and initialize the MV matrix to that view
@@ -291,7 +330,7 @@ function draw() {
     
     if ((document.getElementById("polygon").checked) || (document.getElementById("wirepoly").checked))
     {
-      uploadLightsToShader([0,1,1],[0.0,0.0,0.0],[1.0,0.5,0.0],[0.0,0.0,0.0]);
+      uploadLightsToShader([0,1,1],[0.5,0.5,0.5],[1.0,0.5,0.0],[0.0,0.0,0.0]);
       drawTerrain();
     }
     
@@ -309,8 +348,10 @@ function draw() {
 }
 
 //----------------------------------------------------------------------------------
-function animate() {
-   
+function animate(key) {
+	var moveDir = vec3.create();
+	vec3.scale(moveDir, viewDir, 0.01);
+	vec3.add(eyePt, eyePt, moveDir);
 }
 
 //----------------------------------------------------------------------------------
@@ -321,9 +362,32 @@ function startup() {
   setupBuffers();
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   gl.enable(gl.DEPTH_TEST);
+  document.addEventListener('keydown', function(event) {
+  	onKeyDown(event);
+  });
   tick();
 }
 
+function onKeyDown(event) {
+	if (event.keyCode == 37) {
+		rollerLR(-1);
+	} 
+	else if (event.keyCode == 39) {
+		rollerLR(1);
+	}
+	else if (event.keyCode == 38) {
+		rollerUD(1);
+	}
+	else if (event.keyCode == 40) {
+		rollerUD(-1);
+	}
+	else if (event.keyCode == 74) {
+		turn(1);
+	}
+	else if (event.keyCode == 75) {
+		turn(-1);
+	}
+}
 //----------------------------------------------------------------------------------
 function tick() {
     requestAnimFrame(tick);
