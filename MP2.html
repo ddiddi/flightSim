@@ -1,0 +1,103 @@
+
+<!-- saved from url=(0048)https://courses.engr.illinois.edu/cs418/MP2.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<title></title>
+</head>
+<body><div id="StayFocusd-infobar" style="display:none;">
+    <img src="chrome-extension://laankejkbhbdhmipfmgcngdelahlfoji/common/img/eye_19x19_red.png">
+    <span id="StayFocusd-infobar-msg"></span>
+    <span id="StayFocusd-infobar-links">
+        <a id="StayFocusd-infobar-never-show">hide forever</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a id="StayFocusd-infobar-hide">hide once</a>
+    </span>
+</div>
+<h3 class="title" style="font-size: 1.6em; margin: 0px auto; line-height: 1.2em; font-family: Arial, Helvetica, sans-serif; background-color: rgb(255, 255, 255);">MP2: Flight Simulator<br>
+<span style="font-size:18px">Due: October 28&nbsp;at 11:55pm</span></h3>
+
+<div class="content-middle" style="font-family: Arial, Helvetica, sans-serif; font-size: 13.44px; line-height: 20.16px; background-color: rgb(255, 255, 255);">
+<div class="node" style="margin: 0.5em 0px 1em; padding-bottom: 1em; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(187, 187, 187); clear: both;">
+<div class="content" style="margin: 0.5em 0px;">
+<p>Write a simple flight simulator using WebGL to handle the display. The airplane should automatically move forward at a fixed speed.<br>
+The user will control the bank and tilt of the airplane through the arrow keys.</p>
+
+<ul>
+	<li>Pressing the left (right) arrow key will make the plane roll to its left (right).</li>
+	<li>Pressing the up (down) arrow key will cause the airplane to pitch up (down).</li>
+</ul>
+
+<p>You will need to implement the following</p>
+
+<ol>
+	<li>A quaternion based viewing system.</li>
+	<li>A terrain rendering algorithm so that you have something to fly over. At a minimum, implement the <a href="https://en.wikipedia.org/wiki/Diamond-square_algorithm">diamond-square algorithm</a>. You can implement something more complex if you wish.</li>
+	<li>A vertex shader that implements either Phong or Blinn-Phong shading. You can use demo code from the course webpage.<br>
+	You can position your light source anywhere in the scene as long as the rendered images are well-lit.</li>
+	<li>A user interface that minimally implements the arrow-key controls described above. You can add additional controls to affect speed and yaw if you wish.</li>
+	<li>Your webpage&nbsp;should include text instructions describing how the user interface works.&nbsp;</li>
+</ol>
+
+<p>Submission:</p>
+
+<p>You will upload your files to compass in a zipped folder with name <strong>${NetID}_MP2.zip</strong>. Include all of the files necessary for your application to run locally. Name your webpage <em>Flight.html</em></p>
+
+<p>&nbsp;</p>
+
+<p>Rubric:</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="border-collapse:collapse; width:1000px">
+	<thead>
+		<tr>
+			<th scope="col" style="text-align: left;"><strong>Feature</strong></th>
+			<th scope="col" style="text-align: left;"><strong>Points</strong></th>
+			<th scope="col" style="text-align: left;"><strong>Description</strong></th>
+		</tr>
+	</thead>
+	<tbody style="border-top-width: 1px; border-top-style: solid; border-top-color: rgb(204, 204, 204);">
+		<tr>
+			<td>Interactive UI</td>
+			<td>2pts</td>
+			<td>Using keyboard to control your plane interactively.</td>
+		</tr>
+		<tr>
+			<td>Translation&nbsp;</td>
+			<td>2pts</td>
+			<td>The plane should move forward automatically.</td>
+		</tr>
+		<tr>
+			<td>Roll&nbsp;</td>
+			<td>2pts</td>
+			<td>Apply correct rotation when your plane rolls left or right.</td>
+		</tr>
+		<tr>
+			<td>Pitch&nbsp;</td>
+			<td>2pts</td>
+			<td>Apply correct rotation when your plane pitch up and down.</td>
+		</tr>
+		<tr>
+			<td>Terrain Generation</td>
+			<td>3pts</td>
+			<td>Generate a finite mesh of triangles that resmebles a terrain</td>
+		</tr>
+		<tr>
+			<td>Lighting</td>
+			<td>2pt</td>
+			<td>Implement Phong/Blinn-Phong and render a well-lit and correctly shaded scene</td>
+		</tr>
+		<tr>
+			<td>Performance&nbsp;</td>
+			<td>1pt</td>
+			<td>Your simulator should run interactively and should be reasonably efficient.</td>
+		</tr>
+		<tr>
+			<td>Documentation&nbsp;</td>
+			<td>1pt</td>
+			<td>Your code should be commented or self-explanatory. A readme.txt should explain the features and special instructions ( if any ) to run your code.</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+</body><div></div><div></div></html>

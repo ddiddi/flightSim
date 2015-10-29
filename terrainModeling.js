@@ -50,7 +50,7 @@ function diamondSquare(inputArray, minX, minY, maxX, maxY, n)
 	var midY = Math.floor((minY + maxY)/2);	 
 	var mid = midX + n*midY;
 	if (minX < maxX - 1 && minY < maxY - 1) {
-		inputArray[mid] = (inputArray[minX+n*minY] + inputArray[minX+n*maxY] + inputArray[n*minY+maxX] + inputArray[maxX + n*maxY])/4 + 0.2*Math.random();
+		inputArray[mid] = (inputArray[minX+n*minY] + inputArray[minX+n*maxY] + inputArray[n*minY+maxX] + inputArray[maxX + n*maxY])/4 + 0.02*Math.random();
 		inputArray[midX + n*minY] = inputArray[mid];
 		inputArray[minX + n*midY] = inputArray[mid];
 		inputArray[maxX + n*midY] = inputArray[mid];

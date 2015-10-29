@@ -21,6 +21,7 @@ var eyePt = vec3.fromValues(0.0,0.0,0.0);
 var viewDir = vec3.fromValues(0.0,0.0,-1.0);
 var up = vec3.fromValues(0.0,1.0,0.0);
 
+// Identity vectors for direction and up vector
 var baseDir = vec3.fromValues(0.0,0.0,-1.0);
 var baseUp = vec3.fromValues(0.0,1.0,0.0);
 
@@ -39,7 +40,7 @@ var mvMatrixStack = [];
 
 var globe = quat.create();
 
-
+// To roll left and right
 function rollerLR(degree) {
 	var temp = quat.create();
 	temp = quat.setAxisAngle(temp, viewDir, degToRad(degree));
@@ -48,7 +49,7 @@ function rollerLR(degree) {
 	quat.normalize(globe,globe);
 }
 
-
+// To turn left right using j and k
 function turn(degree) {
 	var temp = quat.create();
 	temp = quat.setAxisAngle(temp, up, degToRad(degree));
@@ -57,7 +58,7 @@ function turn(degree) {
 	quat.normalize(globe,globe);
 }
 
-
+// To roll up or down
 function rollerUD(degree) {
 	var temp = quat.create();
 	var temp2 = vec3.create();
@@ -66,7 +67,6 @@ function rollerUD(degree) {
 	quat.normalize(temp, temp);
 	quat.multiply(globe, globe, temp);
 	quat.normalize(globe,globe);
-
 }
 
 
@@ -312,6 +312,7 @@ function draw() {
     // We'll use perspective 
     mat4.perspective(pMatrix,degToRad(45), gl.viewportWidth / gl.viewportHeight, 0.1, 200.0);
 
+    // Transform from Quat to viewDIR
     vec3.transformQuat(viewDir, baseDir, globe);
     vec3.transformQuat(up, baseUp, globe);
 
@@ -349,8 +350,9 @@ function draw() {
 
 //----------------------------------------------------------------------------------
 function animate(key) {
+  // To automatically keep moving
 	var moveDir = vec3.create();
-	vec3.scale(moveDir, viewDir, 0.01);
+	vec3.scale(moveDir, viewDir, 0.001);
 	vec3.add(eyePt, eyePt, moveDir);
 }
 
@@ -362,30 +364,39 @@ function startup() {
   setupBuffers();
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   gl.enable(gl.DEPTH_TEST);
+  //Keydown for add Event Listenter
   document.addEventListener('keydown', function(event) {
   	onKeyDown(event);
   });
   tick();
 }
 
+// To keydown with event keyCOde 
 function onKeyDown(event) {
 	if (event.keyCode == 37) {
+    // Left
 		rollerLR(-1);
 	} 
 	else if (event.keyCode == 39) {
-		rollerLR(1);
+		// Up
+    rollerLR(1);
 	}
+    // Right
 	else if (event.keyCode == 38) {
 		rollerUD(1);
 	}
+    //Down
 	else if (event.keyCode == 40) {
 		rollerUD(-1);
 	}
+  // J
 	else if (event.keyCode == 74) {
 		turn(1);
 	}
+  // K
 	else if (event.keyCode == 75) {
-		turn(-1);
+		
+    turn(-1);
 	}
 }
 //----------------------------------------------------------------------------------
